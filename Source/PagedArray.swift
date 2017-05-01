@@ -166,8 +166,9 @@ extension PagedArray : BidirectionalCollection {
     public subscript (position: Index) -> Element? {
         get {
             let pageIndex = page(for: position)
-            
-            if let page = elements[pageIndex] {
+            let elementIndex = position%pageSize
+
+            if let page = elements[pageIndex], elementIndex < page.count {
                 return page[position%pageSize]
             } else {
                 // Return nil for all pages that haven't been set yet
